@@ -30,5 +30,3 @@ const posts = await Promise.all(ids.map(async (id) => getPost(id)));
 // await Promise.allSettled(ids.map(async (id) => getPost(id))); // Thêm trạng thái
 console.log(posts);
 ```
-
-Nguyễn Công Phi
