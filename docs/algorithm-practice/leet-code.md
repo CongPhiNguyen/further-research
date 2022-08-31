@@ -1,4 +1,4 @@
-# Leetocode solution
+# Leetcode solution
 
 ## Leetcode 387(Ez)
 
@@ -46,5 +46,17 @@ var countPrefixes = function (words, s) {
     if (s.indexOf(word) === 0) res++;
   }
   return res;
+};
+```
+
+## Leetcode 2357
+
+```js
+var minimumOperations = function (nums) {
+  let s = new Set();
+  for (const num of nums) {
+    s.add(num);
+  }
+  return s.size > 0 ? (s.has(0) ? s.size - 1 : s.size) : 0;
 };
 ```

@@ -30,15 +30,20 @@ Image nơi chứa code, logic,.. còn container là 1 running instance của ima
   ##Chọn thư mục root (Nơi mà để mình có thể thực hiện các lệnh chạy)
   WORKDIR /app
   ##Copy file từ thư mục hiện tại là . (build context) sang images(/app) do đã set workdir phía trên
+  ARG DEFAULT_PORT=80
   ##Có thể viết dockerignore để đá bớt cái node_modules ra
   COPY . ./
   ## Hoặc copy kiểu
   COPY . /app
+  ## Set các biến môi trường
+  ENV PORT 5000
+  Hoặc là ENV PORT $DEFAULT_PORT
   ##Copy xong thì thực hiện lấy các dependency
   RUN npm install
   ##EXPOSE cái port của app chạy, thường backend mình để 5000 thì expose 5000
   ##Có thể không có cũng được, làm vầy thì dễ document hơn
   EXPOSE 5000
+  # Hoặc là EXPOSE $PORT
   ##Tạo volume
   VOLUME ["app/abc"]
   ##RUN thì nó chạy liền luôn còn cái này khi chạy container nó mới chạy
@@ -70,4 +75,13 @@ Volumes có nhiều loại
 
 Docker sẽ kiểu tạo 1 cái folder trong host machine, dev ko bk rõ địa chỉ quản lý ở `docker volume`
 
-- Bind Mounts(Tự quản lý)
+- Bind Mounts(Tự quản lý): Tự set một cái volume ở máy host của mình. Giúp cho persistent data và editable data. Chỉ ảnh hưởng container, ko ảnh hưởng đến image
+  - Vấn đề với `COPY . ./` là mình có thể xóa nó nếu mình binding nhưng mà nếu như mình chạy product thì cũng phải dùng cái này do lúc đó ko binding volumes
+
+## Argument và Environment
+
+- Arg: chỉ có trong Dockerfile, ko lấy được từ cmd hoặc application code. Có thể set trong lệnh run của image
+  - Vẫn có thể đọc được giá trị các tham số qua lệnh `docker history`
+- Env: có trong Dockerfile, và application code, có thể set trong docker run
+  - Nói chung nếu set = env hay viết bằng dockerfile thì ngta vẫn có thể lấy ra đọc được. Chú ý đến vấn đề bảo mật thì ko set ở đây
+  - Xem các lệnh cấu thành nên các layer của image: `docker history <imageName/ID>`
