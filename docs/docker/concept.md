@@ -37,7 +37,7 @@ Image nơi chứa code, logic,.. còn container là 1 running instance của ima
   COPY . /app
   ## Set các biến môi trường
   ENV PORT 5000
-  Hoặc là ENV PORT $DEFAULT_PORT
+  Hoặc là ENV PORT=$DEFAULT_PORT
   ##Copy xong thì thực hiện lấy các dependency
   RUN npm install
   ##EXPOSE cái port của app chạy, thường backend mình để 5000 thì expose 5000
@@ -85,3 +85,86 @@ Docker sẽ kiểu tạo 1 cái folder trong host machine, dev ko bk rõ địa 
 - Env: có trong Dockerfile, và application code, có thể set trong docker run
   - Nói chung nếu set = env hay viết bằng dockerfile thì ngta vẫn có thể lấy ra đọc được. Chú ý đến vấn đề bảo mật thì ko set ở đây
   - Xem các lệnh cấu thành nên các layer của image: `docker history <imageName/ID>`
+
+## Network
+
+- Kiểu giúp container tương tác với nhau
+- Có thể định nghĩa các driver với network
+
+## Docker compose
+
+- Thay vì phải nhớ các lệnh, gắn port, tạo volume thì có thể dùng docker compose để tự động hóa các việc đó, nó tiện lợi nhất là đối với những cái với nhiều micro service, mỗi container là 1 service.
+- Nó không thay đổi image gốc hay gì mà chỉ là guideline các lệnh thôi
+- Cách viết:
+
+File docker-compose.yaml
+
+- Ví dụ 1:
+
+```yaml
+# Version của docker
+version: "3.0"
+# Các container
+services:
+  # 2 dấu cách để xác định là con
+  back-end:
+  front-end:
+  mongodb:
+    environment:
+```
+
+- Nói chung là set environment có thể tạo 1 file rồi --env-file các kiểu
+- Đối với docker-compose thì nó tự tạo cho tất cả các cái trong nó một network luôn, nên ko cần set network
+
+- Ví dụ 2:
+
+```yaml
+version: "3.8"
+services:
+  mongodb:
+    image: "mongo"
+    volumes:
+      - data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=secret
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+volumes:
+  data:
+```
+
+- Phần build mặc định là context nhưng mà còn có thể viết kỹ hơn nếu như dockerfile mình tên là dockerfile-dev
+
+```yaml
+build:
+  context: ./backend
+  dockerfile: dockerfile-dev
+```
+
+- Nếu muốn chạy kiểu tương tác -it thì có thể thêm
+
+```yaml
+stdin_open: true
+tty: true
+```
+
+- Bên docker file thì đối với volume có thể kiểu dùng:
+  - `./backend` chứ ko cần nguyên cái absolute path dài ngoằng
+- Có thể thêm:
+  - Giá trị `depends_on:` là child của các container để biết là khi nào reload cái nào thì cái này sẽ tự reload
+- Viết xong để chạy: `docker-compose up`
+- `docker-compose down` để mà khi chạy xong có thể xóa hết container
+  - Mặc định là nếu ko có -v thì các volume sẽ không được remove
+- `docker-compose build` dùng khi mà muốn build thôi ko muốn chạy

@@ -81,3 +81,8 @@ docker run -it -p 5000:5000 -v "C:\CongPhi\CODE\test-docker\controllers:/app/con
 ```
 
 - Thêm :ro để specify là cái volume trong container nó thay đổi thì không ảnh hưởng đến cái file của host
+
+## Network
+
+- Tạo network: `docker network create <networkName>`
+- Xem: `docker network ls`
