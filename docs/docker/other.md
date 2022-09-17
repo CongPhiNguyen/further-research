@@ -43,3 +43,13 @@ $> db.auth("admin", passwordPrompt())
 # // Show available databases
 $> show dbs
 ```
+
+## Khác nhau giữa docker file và docker-compose.yaml
+
+- Kiểu như docker compose có thể set entrypoint workdir các kiểu nhưng mà ko set được run hay copy như docker file
+
+## Binding mount và copy
+
+- Chỉ khác nhau trong quá trình development và deploy
+
+## NGINX

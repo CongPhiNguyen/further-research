@@ -28,3 +28,9 @@ Một số lệnh:
   apt-get update
   apt-get install <package>
 ```
+
+- Mở explorer:
+
+  - `explore.exe <path>`
+
+- Cài wsl thì có thể gõ nó trước rồi thực hiện các lệnh bên linux ok
