@@ -34,3 +34,6 @@ Một số lệnh:
   - `explore.exe <path>`
 
 - Cài wsl thì có thể gõ nó trước rồi thực hiện các lệnh bên linux ok
+
+- CLI thực chất là commandline Interface
+-
