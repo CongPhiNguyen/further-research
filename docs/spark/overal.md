@@ -1,0 +1,23 @@
+# Overal
+
+- Có 1 số api bên pandas
+  - Dùng với dataset nhỏ. Nó sẽ không bị chia file và chạy trên 1 node duy nhất
+- Khái niệm:
+  - Là 1 thư viện chạy python để dùng nó tương tác với spark
+  - Chạy với Py4J
+- Các tính năng:
+  - Tính toán in-memory
+  - Phân phối tiến trình dựa trên parallelize
+  - Sử dụng với nhiều cái cluster manager như Spark, Yarn, Mesos
+  - Fault-tolerant?
+  - Immutable
+  - Lazy Evaluation
+  - Cache & Persistence
+  - Tối ưu với DataFrames
+  - Có thể sử dụng ANSI SQL
+- Lợi ích:
+  - Có thể sử dụng realtime với streaming và Kafka nhưng với dữ liệu rất lớn thì thôi, không dùng
+  - Có vài thư viện graph đồ nhưng mình cũng không dùng
+- Chạy:
+  - Trước h chạy standalone chứ không có chạy kiểu cluster
+  - Slave - master thì phải cài các thư viện từng con node như từng cái docker mới chạy oke được

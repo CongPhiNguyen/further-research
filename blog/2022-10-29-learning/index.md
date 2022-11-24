@@ -102,4 +102,5 @@ process.stdin.addListener("data", (data) => {
         res+=lst[i]
     return res
   ```
+- Hàm lambda thì nó giống như hàm anonymous bên js
 - Về phần biến thì bên đây không có khái niệm scope nên khai báo đâu cũng được
