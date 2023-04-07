@@ -1,0 +1,4 @@
+- Nhiều cái về redis:
+  - Dùng cho ML
+  - Có gì đặc biệt hơn cách sử dụng truyền thống:
+    -

@@ -99,7 +99,7 @@ tags: [elastic-search]
 - Range: tìm trong khoảng, có thể dùng "gt", "eq"
 - Regex:
 
-````
+```
 {
     "query": {
       "regexp": {
@@ -108,6 +108,21 @@ tags: [elastic-search]
     },
 }
 ```
+
+- Tìm với nhiều id:
+
+  - GET `/<index name>/_search`
+
+```
+{
+  "query": {
+    "ids" : {
+      "values" : ["1", "6"]
+    }
+  }
+}
+```
+
 - Các query:
 
   - Match Query
@@ -145,20 +160,79 @@ tags: [elastic-search]
 ```
 
 {
-  "query": {
-    "fuzzy": {
-      "nutshell": {
-      "value": "relate",
-      "fuzziness": "AUTO",
-      "prefix_length": 3
-      }
-    }
-  }
+"query": {
+"fuzzy": {
+"nutshell": {
+"value": "relate",
+"fuzziness": "AUTO",
+"prefix_length": 3
+}
+}
+}
 }
 
 ```
 
+- Trả về kết quả tương tự như tìm kiếm term dựa trên việc sử dụng khoảng cách Levenshtein.
+- Khoảng cách Levenshtein là số bước thay đổi cần thiết để biến một term (string) này thành một term khác. Những thay đổi này có thể gồm:
+  - Thay đổi một ký tự.
+  - Xóa một ký tự.
+  - Chèn một ký tự.
+  - Chuyển đổi hai ký tự liền kề.
+- Để tìm các term tương tự, fuzzy tạo ra một tập hợp tất cả các biến thể hoặc mở rộng có thể của cụm từ cần tìm kiếm trong một khoảng cách được chỉ định. Truy vấn sau đó trả về kết quả khớp chính xác cho mỗi lần mở rộng.
+- Chúng ta có thể config tham số fuzziness của truy vấn.
+
+  - 0, 1, 2: khoảng cách Levenshtein lớn nhất được chấp thuận.
+  - AUTO: tự động điều chỉnh kết quả dựa trên độ dài của term
+
 - Này hỗ trợ tính năng tìm kiếm term khá ổn, có thể dùng làm công cụ search
 - Có thể sử dụng multi-match với fuzzy search luôn
+
+## Một số câu aggregate
+
+## Xóa document
+
+- DELETE `/<index name>/_doc/id`
+- POST `/<index name>/_delete_by_query`
+
 ```
-````
+
+{
+"query": {
+"match": {
+"field_name": "abc"
+}
+}
+}
+
+```
+
+## Update document
+
+- Thay đổi document: PUT `/<index name>/_doc/id`
+
+```
+
+{
+"field": "data"
+}
+
+```
+
+- Xóa và tạo lại document với các thông tin mới: document PUT `/<index name>/_doc/id`
+
+```
+
+{
+"field": "data"
+}
+
+```
+
+```
+
+```
+
+```
+
+```

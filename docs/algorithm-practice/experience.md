@@ -66,3 +66,16 @@ var missingNumber = function (nums) {
 
 - make object search from array, string
 - 1 chuỗi có được form từ chuỗi có sẵn hay không
+
+- Mô phỏng thuật toán, tìm tình huống chung => Xác định phải case chung hay không
+- Một số cái mảng đếm như countingSort đã học:
+  - const count = new Array(size + 1).fill(0)
+  - Tạo mảng index từ 0 đến size rồi đếm số lần xuất hiện, có thể không dùng set
+- Để swap a và b:
+  - [a, b] = [b, a]
+- Xử lý các chuỗi nên thử regex:
+  ```js
+  myString.replace(/[^\w\s]/gi, "")
+  ```
+  đoạn này bỏ hết mấy ký tự không phải chữ và số
+- Đoạn regex trên cũng có thể dùng trong chỗ split
